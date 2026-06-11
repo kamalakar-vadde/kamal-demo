@@ -1,10 +1,8 @@
 package com.pdfgenerator;
 
-import com.itextpdf.commons.utils.FileUtil;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.licensekey.LicenseKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,59 +16,12 @@ import java.util.regex.Pattern;
 
 /**
  * Main converter class for HTML to PDF conversion using iText 7.1
- * Supports XML-based license key for commercial use
  * Supports XML placeholders that can be replaced with dynamic values
  */
 public class HtmlToPdfConverter {
 
     private static final Logger logger = LoggerFactory.getLogger(HtmlToPdfConverter.class);
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\{\\{\\s*([^}]+)\\s*\\}\\}");
-    
-    private boolean licenseKeyLoaded = false;
-
-    /**
-     * Initialize license key from XML file path
-     * 
-     * @param licenseKeyPath path to the license key XML file
-     * @throws IOException if license key file cannot be read
-     */
-    public void initializeLicenseKey(String licenseKeyPath) throws IOException {
-        try {
-            String licenseKeyContent = readFile(licenseKeyPath);
-            LicenseKey.loadLicenseFile(licenseKeyContent);
-            licenseKeyLoaded = true;
-            logger.info("iText license key loaded successfully from: {}", licenseKeyPath);
-        } catch (Exception e) {
-            logger.error("Failed to load license key from: {}", licenseKeyPath, e);
-            throw new IOException("Failed to load iText license key", e);
-        }
-    }
-
-    /**
-     * Initialize license key from XML string content
-     * Useful for license keys stored in environment variables or config servers
-     * 
-     * @param licenseKeyXml the license key XML content as string
-     */
-    public void initializeLicenseKeyFromString(String licenseKeyXml) {
-        try {
-            LicenseKey.loadLicenseFile(licenseKeyXml);
-            licenseKeyLoaded = true;
-            logger.info("iText license key loaded successfully from string content");
-        } catch (Exception e) {
-            logger.error("Failed to load license key from string content", e);
-            throw new RuntimeException("Failed to load iText license key", e);
-        }
-    }
-
-    /**
-     * Check if license key is loaded
-     * 
-     * @return true if license key is loaded, false otherwise
-     */
-    public boolean isLicenseKeyLoaded() {
-        return licenseKeyLoaded;
-    }
 
     /**
      * Convert HTML string to PDF file
@@ -81,7 +32,6 @@ public class HtmlToPdfConverter {
      */
     public void convertHtmlStringToPdf(String htmlContent, String outputPath) throws IOException {
         logger.info("Starting HTML to PDF conversion. Output path: {}", outputPath);
-        logger.debug("License key loaded: {}", licenseKeyLoaded);
         try (PdfWriter writer = new PdfWriter(outputPath);
              PdfDocument pdfDoc = new PdfDocument(writer)) {
             HtmlConverter.convertToPdf(htmlContent, pdfDoc);

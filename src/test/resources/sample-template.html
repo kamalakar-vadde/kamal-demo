@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            border-top: 1px solid #bdc3c7;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{documentTitle}}</h1>
+    
+    <p>
+        <strong>Date:</strong> {{reportDate}}<br/>
+        <strong>Prepared For:</strong> {{clientName}}<br/>
+        <strong>Prepared By:</strong> {{preparedBy}}
+    </p>
+    
+    <h2>Executive Summary</h2>
+    <p>{{executiveSummary}}</p>
+    
+    <h2>Key Metrics</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Value</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Total Revenue</td>
+            <td>{{totalRevenue}}</td>
+            <td class="highlight">{{revenueStatus}}</td>
+        </tr>
+        <tr>
+            <td>Growth Rate</td>
+            <td>{{growthRate}}</td>
+            <td class="highlight">{{growthStatus}}</td>
+        </tr>
+        <tr>
+            <td>Customer Satisfaction</td>
+            <td>{{satisfaction}}</td>
+            <td class="highlight">{{satisfactionStatus}}</td>
+        </tr>
+    </table>
+    
+    <h2>Detailed Analysis</h2>
+    <p>{{detailedAnalysis}}</p>
+    
+    <h2>Recommendations</h2>
+    <ul>
+        <li>{{recommendation1}}</li>
+        <li>{{recommendation2}}</li>
+        <li>{{recommendation3}}</li>
+    </ul>
+    
+    <div class="footer">
+        <p>This document contains confidential information. For {{clientName}} use only.</p>
+        <p>Generated on {{reportDate}} | Document ID: {{documentId}}</p>
+    </div>
+</body>
+</html>

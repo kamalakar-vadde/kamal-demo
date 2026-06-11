@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for HtmlToPdfConverter including license key functionality
+ * Unit tests for HtmlToPdfConverter
  */
 class HtmlToPdfConverterTest {
 
@@ -25,51 +25,6 @@ class HtmlToPdfConverterTest {
     @BeforeEach
     void setUp() {
         converter = new HtmlToPdfConverter();
-    }
-
-    @Test
-    void testLicenseKeyNotLoadedByDefault() {
-        assertFalse(converter.isLicenseKeyLoaded(), 
-            "License key should not be loaded by default");
-    }
-
-    @Test
-    void testInitializeLicenseKeyFromString() {
-        // This is a mock XML structure - in real usage, you would use actual iText license key
-        String mockLicenseKeyXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<itext-license>" +
-                "<product>iText Core</product>" +
-                "<version>7.1</version>" +
-                "</itext-license>";
-        
-        try {
-            converter.initializeLicenseKeyFromString(mockLicenseKeyXml);
-            // Note: This will fail with mock XML but demonstrates the API usage
-        } catch (RuntimeException e) {
-            // Expected with mock XML
-            logger.info("Expected exception with mock XML: {}", e.getMessage());
-        }
-    }
-
-    @Test
-    void testInitializeLicenseKeyFromFile() throws Exception {
-        // Create a mock license key XML file
-        String mockLicenseKeyXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<itext-license>" +
-                "<product>iText Core</product>" +
-                "<version>7.1</version>" +
-                "</itext-license>";
-        
-        Path licenseFile = tempDir.resolve("license.xml");
-        Files.write(licenseFile, mockLicenseKeyXml.getBytes());
-        
-        // Attempt to load license key from file
-        try {
-            converter.initializeLicenseKey(licenseFile.toString());
-        } catch (IOException e) {
-            // Expected with mock XML - in production use valid license key
-            logger.info("Expected exception with mock license key: {}", e.getMessage());
-        }
     }
 
     @Test
@@ -351,6 +306,4 @@ class HtmlToPdfConverterTest {
         }
         return false;
     }
-
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(HtmlToPdfConverterTest.class);
 }
